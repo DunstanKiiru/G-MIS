@@ -10,9 +10,9 @@ def get_assets():
     query = WaterAsset.query
     asset_type = request.args.get('asset_type')
     status = request.args.get('status')
-    if asset_type:
+    if asset_type and not status:
         query = query.filter_by(asset_type=asset_type)
-    if status:
+    elif status and not asset_type:
         query = query.filter_by(status=status)
 
     assets = query.all()
