@@ -12,6 +12,7 @@ flask-restful = "*"
 flask-cors = "*"
 flask-jwt-extended = "*"
 geoalchemy2 = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
