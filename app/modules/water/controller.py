@@ -49,3 +49,42 @@ class WaterAssetAPI(MethodView):
         except Exception as e:
             db.session.rollback()
             return jsonify({"error": str(e)}), 400
+    
+    def put(self):
+        data = request.get_json()
+        asset_id = data.get("id")
+        asset = WaterAsset.query.get(asset_id)
+        if not asset:
+            return jsonify({"error": "Asset not found"}), 404
+        try:
+            asset.name = data["name"]
+            asset.asset_type = data["asset_type"]
+            asset.installation_date = datetime.strptime(data["installation_date"], "%Y-%m-%d") if data.get("installation_date") else None
+            asset.material = data["material"]
+            asset.capacity = data["capacity"]
+            asset.location = data["location"]
+            asset.latitude = data["latitude"]
+            asset.longitude = data["longitude"]
+            asset.status = data["status"]
+            asset.last_maintenance = datetime.strptime(data["last_maintenance"], "%Y-%m-%d") if data.get("last_maintenance") else None
+            
+            db.session.commit()
+            return jsonify({"message": "Asset updated successfully"}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"error": str(e)}), 400
+    
+    def delete(self):
+        data = request.get_json()
+        asset_id = data.get("id")
+        asset = WaterAsset.query.get(asset_id)
+        if not asset:
+            return jsonify({"error": "Asset not found"}), 404
+        try:
+            db.session.delete(asset)
+            db.session.commit()
+            return jsonify({"message": "Asset deleted successfully"}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"error": str(e)}), 400
+
