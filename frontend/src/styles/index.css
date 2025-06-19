@@ -36,3 +36,6 @@ html,body, #root{
   max-width: 420px;
   margin: auto;
 }
+.chart-container {
+  padding: 1rem;
+}

@@ -5,20 +5,49 @@ import DashboardChart from "../components/Dashboard/Dashboard";
 
 const Home = () => {
   const [assets, setAssets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get("/api/assets").then((res) => setAssets(res.data));
+    axios
+      .get("/api/assets")
+      .then((res) => setAssets(res.data))
+      .catch(() => setError("Failed to fetch assets."))
+      .finally(() => setLoading(false));
   }, []);
 
-  const totalAssets = assets.length;
+  // Status
   const statusCounts = assets.reduce((acc, asset) => {
     const status = asset.status || "Unknown";
     acc[status] = (acc[status] || 0) + 1;
     return acc;
   }, {});
 
-  const labels = Object.keys(statusCounts);
-  const dataValues = Object.values(statusCounts);
+  const statusLabels = Object.keys(statusCounts);
+  const statusValues = Object.values(statusCounts);
+
+  // Type
+  const typeCounts = assets.reduce((acc, asset) => {
+    const type = asset.asset_type || "Unknown";
+    acc[type] = (acc[type] || 0) + 1;
+    return acc;
+  }, {});
+
+  const typeLabels = Object.keys(typeCounts);
+  const typeValues = Object.values(typeCounts);
+
+  // KPI
+  const totalAssets = assets.length;
+  const activeAssets = statusCounts["Active"] || 0;
+  const inactiveAssets = statusCounts["Inactive"] || 0;
+  const unknownStatusAssets = statusCounts["Unknown"] || 0;
+
+  const kpis = [
+    { label: "Total Assets", value: totalAssets },
+    { label: "Active Assets", value: activeAssets },
+    { label: "Inactive Assets", value: inactiveAssets },
+    { label: "Unknown Status", value: unknownStatusAssets },
+  ];
 
   return (
     <div className="container mt-5 text-center">
@@ -28,6 +57,7 @@ const Home = () => {
         sustainable rural water services
       </p>
 
+      {/* Mini Navigation*/}
       <div className="my-4">
         <Link to="/waterassets" className="btn btn-primary btn-lg me-3">
           View Water Assets
@@ -36,10 +66,20 @@ const Home = () => {
           Contact Us
         </Link>
       </div>
-      {assets.length > 0 ? (
-        <DashboardChart labels={labels} dataValues={dataValues} />
-      ) : (
+
+      {/*Chart*/}
+      {loading ? (
         <p>Loading asset data...</p>
+      ) : error ? (
+        <p className="text-danger">{error}</p>
+      ) : (
+        <DashboardChart
+          statusLabels={statusLabels}
+          statusValues={statusValues}
+          typeLabels={typeLabels}
+          typeValues={typeValues}
+          kpis={kpis}
+        />
       )}
 
       <section className="mt-5">
