@@ -6,6 +6,10 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <Home/>
+    },
+    {
+        path: '/waterassets',
+        element: <WaterAssets />
     }
 ])
 
