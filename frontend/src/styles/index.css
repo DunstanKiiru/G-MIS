@@ -31,3 +31,8 @@ html,body, #root{
   width: 100%;
   border-collapse: collapse;
 }
+
+.pie-chart-container {
+  max-width: 420px;
+  margin: auto;
+}
