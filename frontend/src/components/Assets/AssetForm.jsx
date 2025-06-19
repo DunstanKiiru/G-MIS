@@ -42,8 +42,9 @@ function AssetForm({asset, onSubmit}){
                     className="form-control mb-2"
                 />
             ))}
-            <button type="Submit" className="btn btn-primary">{asset ? 'Update': 'Create'}</button>
-
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <button type="Submit" className="btn btn-primary">{asset ? 'Update': 'Create'}</button>
+            </div>
         </form>
     )
 }

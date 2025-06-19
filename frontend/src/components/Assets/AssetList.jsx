@@ -1,41 +1,82 @@
+import React, { useState } from 'react';
+
 function AssetList({ assets, onEdit, onDelete }) {
+  const [filterType, setFilterType] = useState('All');
+  const [filterStatus, setFilterStatus] = useState('All');
+  const assetTypes = ['All', ...Array.from(new Set(assets.map(a => a.asset_type)))];
+  const statuses = ['All', ...Array.from(new Set(assets.map(a => a.status)))];
+  const filteredAssets = assets.filter(asset => {
+    return (filterType === 'All' || asset.asset_type === filterType) &&
+           (filterStatus === 'All' || asset.status === filterStatus);
+  });
+
   return (
-    <table className="table table-bordered">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Status</th>
-          <th>Location</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {assets.map((asset) => (
-          <tr key={asset.id}>
-            <td>{asset.name}</td>
-            <td>{asset.asset_type}</td>
-            <td>{asset.status}</td>
-            <td>{asset.location}</td>
-            <td>
-              <button
-                onClick={() => onEdit(asset)}
-                className="btn btn-sm btn-warning me-2"
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => onDelete(asset.id)}
-                className="btn btn-sm btn-danger"
-              >
-                Delete
-              </button>
-            </td>
+    <>
+      <div className="mb-3 d-flex gap-3">
+        <div>
+          <label htmlFor="filterType" className="form-label">Filter by Type:</label>
+          <select
+            id="filterType"
+            className="form-select"
+            value={filterType}
+            onChange={e => setFilterType(e.target.value)}
+          >
+            {assetTypes.map(type => (
+              <option key={type} value={type}>{type}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="filterStatus" className="form-label">Filter by Status:</label>
+          <select
+            id="filterStatus"
+            className="form-select"
+            value={filterStatus}
+            onChange={e => setFilterStatus(e.target.value)}
+          >
+            {statuses.map(status => (
+              <option key={status} value={status}>{status}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <table className="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Location</th>
+            <th>Actions</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {filteredAssets.map((asset) => (
+            <tr key={asset.id}>
+              <td>{asset.name}</td>
+              <td>{asset.asset_type}</td>
+              <td>{asset.status}</td>
+              <td>{asset.location}</td>
+              <td>
+                <button
+                  onClick={() => onEdit(asset)}
+                  className="btn btn-sm btn-warning me-2"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => onDelete(asset.id)}
+                  className="btn btn-sm btn-danger"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 }
 
-export default AssetList
+export default AssetList;
