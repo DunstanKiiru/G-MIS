@@ -42,11 +42,8 @@ function WaterAssets(){
       <div className="EditContainer">
         <h2>{editingAsset ? "Edit" : "Add"} Water Assed</h2>
         <AssetForm asset={editingAsset} onSubmit={handleSubmit} />
-      </div>
-
-      <div className='DeleteContainer'>
         <h3>Garissa County Water Assets</h3>
-        
+        <AssetList assets={assets} onEdit={handleEdit} onDelete={handleDelete} />
       </div>
     </>
   );
