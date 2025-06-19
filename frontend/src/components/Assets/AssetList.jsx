@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 
-function AssetList({ assets, onEdit, onDelete }) {
+function AssetList({ assets, onEdit }) {
   const [filterType, setFilterType] = useState('All');
   const [filterStatus, setFilterStatus] = useState('All');
+
   const assetTypes = ['All', ...Array.from(new Set(assets.map(a => a.asset_type)))];
   const statuses = ['All', ...Array.from(new Set(assets.map(a => a.status)))];
+
   const filteredAssets = assets.filter(asset => {
     return (filterType === 'All' || asset.asset_type === filterType) &&
            (filterStatus === 'All' || asset.status === filterStatus);
   });
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return '';
+    return new Date(dateStr).toISOString().slice(0, 10);
+  };
 
   return (
     <>
@@ -47,6 +54,8 @@ function AssetList({ assets, onEdit, onDelete }) {
             <th>Type</th>
             <th>Status</th>
             <th>Location</th>
+            <th>Installation Date</th>
+            <th>Last Maintenance</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -57,18 +66,14 @@ function AssetList({ assets, onEdit, onDelete }) {
               <td>{asset.asset_type}</td>
               <td>{asset.status}</td>
               <td>{asset.location}</td>
+              <td>{formatDate(asset.installation_date)}</td>
+              <td>{formatDate(asset.last_maintenance)}</td>
               <td>
                 <button
                   onClick={() => onEdit(asset)}
-                  className="btn btn-sm btn-warning me-2"
+                  className="btn btn-sm btn-warning"
                 >
                   Edit
-                </button>
-                <button
-                  onClick={() => onDelete(asset.id)}
-                  className="btn btn-sm btn-danger"
-                >
-                  Delete
                 </button>
               </td>
             </tr>
