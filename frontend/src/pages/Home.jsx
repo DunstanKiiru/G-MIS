@@ -1,11 +1,22 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
 const Home = () => {
   return (
-    <div className='HomeContainer1'>
-        <h1>Garissa County Water Assets</h1>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero minima molestias accusantium! Eum nostrum impedit cupiditate perferendis provident, aspernatur laboriosam voluptates quis deleniti amet vel, porro velit ab similique ullam?</p>
+    <div className="container mt-5 text-center">
+      <h1>GARUWASCO MIS</h1>
+      <p>
+        Garissa Rural Water and Sanitation Company — Safe, adequate and sustainable rural water services
+      </p>
+
+      <div className = "my-4">
+        <Link to ="/waterassets" className='btn tbn-primary btn-lg me-3'>
+          View Water Assets
+        </Link>
+
+      </div>
     </div>
-  )
+  );
 }
 
 export default Home
