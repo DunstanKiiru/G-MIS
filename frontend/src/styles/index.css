@@ -1,0 +1,22 @@
+/* Add styles for WaterAssets page layout */
+.water-assets-container {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 1rem;
+}
+
+.water-assets-form {
+  flex: 1 1 40%;
+}
+
+.water-assets-list {
+  flex: 1 1 60%;
+  overflow-x: auto;
+}
+
+/* Optional: make table responsive */
+.water-assets-list table {
+  width: 100%;
+  border-collapse: collapse;
+}

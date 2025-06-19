@@ -20,8 +20,7 @@ class WaterAsset(db.Model):
     status = db.Column(db.String(30), nullable=False)
     last_maintenance = db.Column(
         db.DateTime,
-        default=lambda: datetime.now(timezone.utc),
-        nullable=False
+        nullable=True
     )
 
     def to_dict(self):
@@ -36,6 +35,6 @@ class WaterAsset(db.Model):
             "latitude": self.latitude,
             "longitude": self.longitude,
             "status": self.status,
-            "last_maintenance": self.last_maintenance.isoformat(),
+            "last_maintenance": self.last_maintenance.isoformat() if self.last_maintenance else None,
         }
     

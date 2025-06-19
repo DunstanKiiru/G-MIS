@@ -17,7 +17,7 @@ def seed_water_assets():
                 latitude=40.7128,
                 longitude=-74.0060,
                 status="Active",
-                last_maintenance=datetime(2023, 6, 1, 9, 0, 0, tzinfo=timezone.utc)
+                last_maintenance=None
             ),
             WaterAsset(
                 name="Secondary Pipe",
@@ -29,7 +29,7 @@ def seed_water_assets():
                 latitude=40.7138,
                 longitude=-74.0050,
                 status="Inactive",
-                last_maintenance=datetime(2023, 5, 15, 10, 0, 0, tzinfo=timezone.utc)
+                last_maintenance=None
             ),
             WaterAsset(
                 name="Backup Pump",
@@ -41,7 +41,7 @@ def seed_water_assets():
                 latitude=40.7148,
                 longitude=-74.0040,
                 status="Active",
-                last_maintenance=datetime(2024, 1, 10, 11, 0, 0, tzinfo=timezone.utc)
+                last_maintenance=None
             )
         ]
 

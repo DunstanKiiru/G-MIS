@@ -27,7 +27,7 @@ def get_assets():
         "latitude": a.latitude,
         "longitude": a.longitude,
         "status": a.status,
-        "last_maintenance": a.last_maintenance.isoformat()
+        "last_maintenance": a.last_maintenance.isoformat() if a.last_maintenance else None
     } for a in assets])
 
 @api.route('/api/assets/<int:id>', methods=['GET'])
@@ -44,12 +44,13 @@ def get_asset(id):
         "latitude": asset.latitude,
         "longitude": asset.longitude,
         "status": asset.status,
-        "last_maintenance": asset.last_maintenance.isoformat()
+        "last_maintenance": asset.last_maintenance.isoformat() if asset.last_maintenance else None
     })
 
 @api.route('/api/assets', methods=['POST'])
 def create_asset():
     data = request.get_json()
+    last_maintenance = data.get('last_maintenance')
     asset = WaterAsset(
         name=data['name'],
         asset_type=data['asset_type'],
@@ -60,7 +61,7 @@ def create_asset():
         latitude=data['latitude'],
         longitude=data['longitude'],
         status=data['status'],
-        last_maintenance=datetime.fromisoformat(data['last_maintenance'])
+        last_maintenance=datetime.fromisoformat(last_maintenance) if last_maintenance else None
     )
     db.session.add(asset)
     db.session.commit()
@@ -76,7 +77,8 @@ def update_asset(id):
     if 'installation_date' in data:
         asset.installation_date = datetime.fromisoformat(data['installation_date'])
     if 'last_maintenance' in data:
-        asset.last_maintenance = datetime.fromisoformat(data['last_maintenance'])
+        last_maintenance = data['last_maintenance']
+        asset.last_maintenance = datetime.fromisoformat(last_maintenance) if last_maintenance else None
     db.session.commit()
     return jsonify({"message": "Asset updated"})
 

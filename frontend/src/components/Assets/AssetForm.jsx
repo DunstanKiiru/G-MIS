@@ -31,7 +31,7 @@ function AssetForm({asset, onSubmit}){
     }
 
     return(
-        <form onSubmit={handleSubmit}>
+        <form className="mb-4" onSubmit={handleSubmit}>
             {Object.keys(form).map((field) => (
                 <input
                     key={field}
@@ -39,9 +39,10 @@ function AssetForm({asset, onSubmit}){
                     placeholder={field}
                     value={form[field]}
                     onChange={handleChange}
+                    className="form-control mb-2"
                 />
             ))}
-            <button type="Submit">{asset ? 'Update': 'Create'}</button>
+            <button type="Submit" className="btn btn-primary">{asset ? 'Update': 'Create'}</button>
 
         </form>
     )
