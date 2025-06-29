@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>New Quality Test</h2>
+  <form method="post">
+    <div class="form-group">
+      <label>Water System</label>
+      <select name="system_id" class="form-control" required>
+        {% for ws in water_systems %}<option value="{{ ws.id }}">{{ ws.name }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Test Type</label>
+      <select name="test_type_id" class="form-control" required>
+        {% for tp in types %}<option value="{{ tp.id }}">{{ tp.name }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Date</label>
+      <input type="date" name="test_date" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label>Value</label>
+      <input type="text" name="value" class="form-control" required>
+    </div>
+    <button class="btn btn-success">Create</button>
+    <a href="{{ url_for('water_quality.ui_index') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Staff Development</h2>
+  <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#devModal">New Record</button>
+  <table class="table table-striped">
+    <thead><tr><th>ID</th><th>Operator</th><th>Need</th><th>Met?</th><th>Date Met</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for r in records %}
+      <tr>
+        <td>{{ r.id }}</td>
+        <td>{{ r.operator.name }}</td>
+        <td>{{ r.need.name }}</td>
+        <td>{{ 'Yes' if r.is_met else 'No' }}</td>
+        <td>{{ r.date_met or '-' }}</td>
+        <td>
+          <button class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#devModal"
+                  data-id="{{ r.id }}"
+                  data-op="{{ r.operator_id }}"
+                  data-need="{{ r.need_id }}"
+                  data-met="{{ r.is_met }}"
+                  data-date="{{ r.date_met }}">Edit</button>
+          <a href="{{ url_for('staff_dev.delete_record', id=r.id) }}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Development Modal -->
+<div class="modal fade" id="devModal" tabindex="-1">
+  <div class="modal-dialog">
+    <form id="devForm" method="post" action="">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Staff Development</h5><button class="close" data-dismiss="modal">&times;</button></div>
+        <div class="modal-body">
+          <input type="hidden" name="id" id="dev-id">
+          <div class="form-group">
+            <label>Operator</label>
+            <select name="operator_id" id="dev-operator" class="form-control">
+              {% for op in operators %}<option value="{{ op.id }}">{{ op.name }}</option>{% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Need</label>
+            <select name="need_id" id="dev-need" class="form-control">
+              {% for n in needs %}<option value="{{ n.id }}">{{ n.name }}</option>{% endfor %}
+            </select>
+          </div>
+          <div class="form-group form-check">
+            <input type="checkbox" id="dev-met" name="is_met" class="form-check-input">
+            <label class="form-check-label" for="dev-met">Completed</label>
+          </div>
+          <div class="form-group">
+            <label>Date Met</label>
+            <input type="date" id="dev-date" name="date_met" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer"><button class="btn btn-secondary" data-dismiss="modal">Cancel</button><button type="submit" class="btn btn-primary">Save</button></div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$('#devModal').on('show.bs.modal', function(e){
+  var btn = $(e.relatedTarget), form = $('#devForm');
+  var id = btn.data('id');
+  if(id){
+    form.attr('action','/api/staff-dev/records/'+id);
+    form.append('<input type="hidden" name="_method" value="PUT">');
+    $('#dev-id').val(id);
+    $('#dev-operator').val(btn.data('op'));
+    $('#dev-need').val(btn.data('need'));
+    $('#dev-met').prop('checked', btn.data('met'));
+    $('#dev-date').val(btn.data('date'));
+  } else {
+    form.attr('action','/api/staff-dev/records');
+    form.find('input[name="_method"]').remove();
+    form[0].reset();
+  }
+});
+</script>
+{% endblock %}

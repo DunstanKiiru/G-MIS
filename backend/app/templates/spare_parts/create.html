@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>New Spare-Part Inventory</h2>
+  <form method="post">
+    <div class="form-group">
+      <label>Water System</label>
+      <select name="system_id" class="form-control" required>
+        {% for ws in water_systems %}<option value="{{ ws.id }}">{{ ws.name }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Part Type</label>
+      <select name="part_type_id" class="form-control" required>
+        {% for pt in types %}<option value="{{ pt.id }}">{{ pt.name }} ({{ pt.unit }})</option>{% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Quantity</label>
+      <input type="number" name="quantity" class="form-control" value="0" required>
+    </div>
+    <div class="form-group">
+      <label>Last Restocked</label>
+      <input type="date" name="last_restocked" class="form-control">
+    </div>
+    <button class="btn btn-success">Create</button>
+    <a href="{{ url_for('spare_parts.ui_index') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

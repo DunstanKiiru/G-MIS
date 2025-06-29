@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Edit Quality Test</h2>
+  <form method="post">
+    <div class="form-group">
+      <label>Water System</label>
+      <select name="system_id" class="form-control">
+        {% for ws in water_systems %}
+          <option value="{{ ws.id }}" {% if ws.id==test.system_id %}selected{% endif %}>{{ ws.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Test Type</label>
+      <select name="test_type_id" class="form-control">
+        {% for tp in types %}
+          <option value="{{ tp.id }}" {% if tp.id==test.test_type %}selected{% endif %}>{{ tp.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Date</label>
+      <input type="date" name="test_date" class="form-control" value="{{ test.test_date }}">
+    </div>
+    <div class="form-group">
+      <label>Value</label>
+      <input type="text" name="value" class="form-control" value="{{ test.value }}">
+    </div>
+    <button class="btn btn-primary">Save</button>
+    <a href="{{ url_for('water_quality.ui_index') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

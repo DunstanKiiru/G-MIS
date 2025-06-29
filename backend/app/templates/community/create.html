@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>New Contribution</h2>
+  <form method="post">
+    <div class="form-group">
+      <label>Water System</label>
+      <select name="system_id" class="form-control" required>
+        {% for ws in water_systems %}<option value="{{ ws.id }}">{{ ws.name }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Type</label>
+      <select name="contribution_type_id" class="form-control" required>
+        {% for t in types %}<option value="{{ t.id }}">{{ t.name }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Amount</label>
+      <input type="number" name="amount" step="0.01" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Date</label>
+      <input type="date" name="date_recorded" class="form-control" required>
+    </div>
+    <button class="btn btn-success">Create</button>
+    <a href="{{ url_for('community.ui_index') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

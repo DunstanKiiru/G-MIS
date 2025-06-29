@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Edit Staff Dev Record</h2>
+  <form method="post">
+    <div class="form-group">
+      <label>Operator</label>
+      <select name="operator_id" class="form-control">
+        {% for op in operators %}
+          <option value="{{ op.id }}" {% if op.id==record.operator_id %}selected{% endif %}>{{ op.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Need</label>
+      <select name="need_id" class="form-control">
+        {% for n in needs %}
+          <option value="{{ n.id }}" {% if n.id==record.need_id %}selected{% endif %}>{{ n.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" name="is_met" class="form-check-input" id="is_met" {% if record.is_met %}checked{% endif %}>
+      <label class="form-check-label" for="is_met">Completed</label>
+    </div>
+    <div class="form-group">
+      <label>Date Met</label>
+      <input type="date" name="date_met" class="form-control" value="{{ record.date_met }}">
+    </div>
+    <button class="btn btn-primary">Save</button>
+    <a href="{{ url_for('staff_dev.ui_index') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Edit O&M Visit</h2>
+  <form method="post">
+    <div class="form-group">
+      <label>Water System</label>
+      <select name="system_id" class="form-control">
+        {% for ws in water_systems %}
+          <option value="{{ ws.id }}" {% if ws.id==visit.water_system_id %}selected{% endif %}>{{ ws.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Type</label>
+      <select name="visit_type_id" class="form-control">
+        {% for t in types %}
+          <option value="{{ t.id }}" {% if t.id==visit.visit_type %}selected{% endif %}>{{ t.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Date</label>
+      <input type="date" name="visit_date" class="form-control" value="{{ visit.visit_date }}">
+    </div>
+    <div class="form-group">
+      <label>Notes</label>
+      <textarea name="notes" class="form-control">{{ visit.notes }}</textarea>
+    </div>
+    <button class="btn btn-primary">Save</button>
+    <a href="{{ url_for('om_visits.ui_index') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

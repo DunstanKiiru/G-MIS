@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Edit Spare-Part Inventory</h2>
+  <form method="post">
+    <div class="form-group">
+      <label>Water System</label>
+      <select name="system_id" class="form-control">
+        {% for ws in water_systems %}
+          <option value="{{ ws.id }}" {% if ws.id==inv.water_system_id %}selected{% endif %}>{{ ws.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Part Type</label>
+      <select name="part_type_id" class="form-control">
+        {% for pt in types %}
+          <option value="{{ pt.id }}" {% if pt.id==inv.part_type_id %}selected{% endif %}>{{ pt.name }} ({{ pt.unit }})</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Quantity</label>
+      <input type="number" name="quantity" class="form-control" value="{{ inv.quantity }}">
+    </div>
+    <div class="form-group">
+      <label>Last Restocked</label>
+      <input type="date" name="last_restocked" class="form-control" value="{{ inv.last_restocked }}">
+    </div>
+    <button class="btn btn-primary">Save</button>
+    <a href="{{ url_for('spare_parts.ui_index') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

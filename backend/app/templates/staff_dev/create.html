@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>New Staff Dev Record</h2>
+  <form method="post">
+    <div class="form-group">
+      <label>Operator</label>
+      <select name="operator_id" class="form-control" required>
+        {% for op in operators %}<option value="{{ op.id }}">{{ op.name }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Need</label>
+      <select name="need_id" class="form-control" required>
+        {% for n in needs %}<option value="{{ n.id }}">{{ n.name }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" name="is_met" class="form-check-input" id="is_met">
+      <label class="form-check-label" for="is_met">Completed</label>
+    </div>
+    <div class="form-group">
+      <label>Date Met</label>
+      <input type="date" name="date_met" class="form-control">
+    </div>
+    <button class="btn btn-success">Create</button>
+    <a href="{{ url_for('staff_dev.ui_index') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

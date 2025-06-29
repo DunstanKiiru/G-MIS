@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Delete Quality Test</h2>
+  <p>Are you sure you want to delete test <strong>#{{ test.id }}</strong>?</p>
+  <form method="post">
+    <button class="btn btn-danger">Yes, delete</button>
+    <a href="{{ url_for('water_quality.ui_index') }}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

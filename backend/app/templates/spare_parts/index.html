@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Spare-Parts Inventory</h2>
+  <a href="{{ url_for('spare_parts.create_view') }}" class="btn btn-primary mb-3">New Inventory</a>
+  <table class="table table-striped">
+    <thead><tr><th>ID</th><th>System</th><th>Part</th><th>Qty</th><th>Restocked</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for i in inventory %}
+      <tr>
+        <td>{{ i.id }}</td>
+        <td>{{ i.water_system.name }}</td>
+        <td>{{ i.part_type.name }}</td>
+        <td>{{ i.quantity }}</td>
+        <td>{{ i.last_restocked or '-' }}</td>
+        <td>
+          <a href="{{ url_for('spare_parts.edit_view', id=i.id) }}" class="btn btn-sm btn-secondary">Edit</a>
+          <a href="{{ url_for('spare_parts.delete_view', id=i.id) }}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
