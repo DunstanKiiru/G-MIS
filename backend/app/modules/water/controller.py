@@ -1,4 +1,3 @@
-
 from flask import Blueprint, request, jsonify
 from app.models.water_asset import WaterAsset
 from app.extensions import db
