@@ -6,4 +6,4 @@ class StaffDevelopmentNeed(db.Model):
     name        = db.Column(db.String(100), nullable=False, unique=True)
     description = db.Column(db.Text, nullable=True)
 
-    records     = db.relationship('StaffDevelopmentRecord', backref='need', cascade='all, delete-orphan')
+    records     = db.relationship('StaffDevelopmentRecord', back_populates='need', cascade='all, delete-orphan')
