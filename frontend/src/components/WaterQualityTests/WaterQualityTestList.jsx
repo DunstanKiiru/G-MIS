@@ -20,7 +20,7 @@ function WaterQualityTestList({ tests, onEdit, onDelete }) {
       <tbody>
         {tests.map((test) => (
           <tr key={test.id}>
-            <td>{test.system_id}</td>
+            <td>{test.system}</td>
             <td>{test.type}</td>
             <td>{formatDate(test.test_date)}</td>
             <td>{test.value}</td>

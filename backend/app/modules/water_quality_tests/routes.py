@@ -33,8 +33,8 @@ def list_tests():
     recs = WaterQualityTest.query.all()
     return jsonify([{
         'id': rec.id,
-        'system_id': rec.system_id,
-        'type': rec.test_type_rel.name,
+        'system': rec.system.name,
+        'type': rec.test_type.name,
         'test_date': rec.test_date.isoformat(),
         'value': rec.value
     } for rec in recs])
@@ -45,7 +45,7 @@ def create_test():
     data = request.get_json()
     rec = WaterQualityTest(
         system_id = data['system_id'],
-        test_type = data['test_type_id'],
+        test_type_id = data['test_type_id'],
         test_date = data.get('test_date'),
         value     = data.get('value')
     )
