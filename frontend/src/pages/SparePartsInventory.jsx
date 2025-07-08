@@ -36,7 +36,7 @@ function SparePartsInventory() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this spare part?")) {
       try {
-        await axios.post(`/spare-parts/${id}/delete`);
+        await axios.delete(`/api/spare-parts/inventory/${id}`);
         fetchData();
       } catch (error) {
         console.error("Error deleting spare part:", error);
@@ -47,11 +47,17 @@ function SparePartsInventory() {
 
   const handleSubmit = async (data, resetForm) => {
     try {
+      const payload = {
+        water_system_id: data.system_id,
+        part_type_id: data.part_type_id,
+        quantity: data.quantity,
+        last_restocked: data.last_restocked
+      };
       if (editingPart) {
-        await axios.post(`/api/spare-parts/ui/${editingPart.id}/edit`, data);
+        await axios.put(`/api/spare-parts/inventory/${editingPart.id}`, payload);
         setEditingPart(null);
       } else {
-        await axios.post("/api/spare-parts/ui/create", data);
+        await axios.post("/api/spare-parts/inventory", payload);
       }
       resetForm();
       fetchData();

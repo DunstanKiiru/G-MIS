@@ -1,3 +1,4 @@
+
 # backend/app/routes/om_visit_routes.py
 
 from flask import Blueprint, request, jsonify
@@ -69,4 +70,3 @@ def delete_visit(id):
     db.session.delete(rec)
     db.session.commit()
     return jsonify({'message': 'Deleted'})
-

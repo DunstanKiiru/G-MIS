@@ -20,7 +20,7 @@ function OMVisitList({ visits, onEdit, onDelete }) {
       <tbody>
         {visits.map((visit) => (
           <tr key={visit.id}>
-            <td>{visit.system_id}</td>
+            <td>{visit.water_system}</td>
             <td>{visit.type}</td>
             <td>{formatDate(visit.visit_date)}</td>
             <td>{visit.notes}</td>

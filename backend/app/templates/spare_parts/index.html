@@ -9,8 +9,8 @@
       {% for i in inventory %}
       <tr>
         <td>{{ i.id }}</td>
-        <td>{{ i.water_system.name }}</td>
-        <td>{{ i.part_type.name }}</td>
+        <td>{{ i.water_system.name if i.water_system else '' }}</td>
+        <td>{{ i.part_type.name if i.part_type else '' }}</td>
         <td>{{ i.quantity }}</td>
         <td>{{ i.last_restocked or '-' }}</td>
         <td>

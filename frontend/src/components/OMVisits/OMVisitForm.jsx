@@ -14,7 +14,7 @@ function OMVisitForm({ visit, onSubmit, types, waterSystems }) {
     if (visit) {
       setForm({
         system_id: visit.system_id || '',
-        visit_type_id: visit.type?.id || '',
+        visit_type_id: visit.visit_type_id || '',
         visit_date: visit.visit_date ? visit.visit_date.slice(0, 10) : '',
         notes: visit.notes || ''
       });
