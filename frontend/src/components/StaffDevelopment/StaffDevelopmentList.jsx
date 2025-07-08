@@ -20,7 +20,7 @@ function StaffDevelopmentList({ records, onEdit, onDelete }) {
       <tbody>
         {records.map((record) => (
           <tr key={record.id}>
-            <td>{record.operator_id}</td>
+            <td>{record.operator}</td>
             <td>{record.need}</td>
             <td>{record.is_met ? 'Yes' : 'No'}</td>
             <td>{formatDate(record.date_met)}</td>

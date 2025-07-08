@@ -20,7 +20,7 @@ function SparePartList({ inventory, onEdit, onDelete }) {
       <tbody>
         {inventory.map((part) => (
           <tr key={part.id}>
-            <td>{part.system_id}</td>
+            <td>{part.water_system}</td>
             <td>{part.part_type}</td>
             <td>{part.quantity}</td>
             <td>{formatDate(part.last_restocked)}</td>

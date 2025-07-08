@@ -13,8 +13,8 @@ function SparePartForm({ part, onSubmit, types, waterSystems }) {
   useEffect(() => {
     if (part) {
       setForm({
-        system_id: part.system_id || '',
-        part_type_id: part.part_type?.id || '',
+        system_id: part.water_system_id || '',
+        part_type_id: part.part_type_id || '',
         quantity: part.quantity || '',
         last_restocked: part.last_restocked ? part.last_restocked.slice(0, 10) : ''
       });

@@ -42,6 +42,8 @@ def list_records():
     return jsonify([{
         'id': rec.id,
         'operator_id': rec.operator_id,
+        'operator': rec.operator.name,
+        'need_id': rec.need_id,
         'need': rec.need.name,
         'date': rec.date.isoformat() if rec.date else None,
         'notes': rec.notes,

@@ -14,7 +14,7 @@ function WaterQualityTestForm({ test, onSubmit, types, waterSystems }) {
     if (test) {
       setForm({
         system_id: test.system_id || '',
-        test_type_id: test.type?.id || '',
+        test_type_id: test.test_type_id || '',
         test_date: test.test_date ? test.test_date.slice(0, 10) : '',
         value: test.value || ''
       });

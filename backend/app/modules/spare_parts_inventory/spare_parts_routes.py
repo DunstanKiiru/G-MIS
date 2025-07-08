@@ -31,7 +31,7 @@ def create_inv():
 @bp.route('/ui/<int:id>/edit', methods=['POST'])
 def update_inv(id):
     rec = SparePartInventory.query.get_or_404(id)
-    data = request.form
+    data = request.get_json()
     rec.water_system_id = data['system_id']
     rec.part_type_id = data['part_type_id']
     rec.quantity = data.get('quantity', rec.quantity)

@@ -48,10 +48,10 @@ function SparePartsInventory() {
   const handleSubmit = async (data, resetForm) => {
     try {
       if (editingPart) {
-        await axios.post(`/spare-parts/${editingPart.id}/edit`, data);
+        await axios.post(`/api/spare-parts/ui/${editingPart.id}/edit`, data);
         setEditingPart(null);
       } else {
-        await axios.post("/spare-parts/create", data);
+        await axios.post("/api/spare-parts/ui/create", data);
       }
       resetForm();
       fetchData();

@@ -14,7 +14,7 @@ function StaffDevelopmentForm({ record, onSubmit, needs, operators }) {
     if (record) {
       setForm({
         operator_id: record.operator_id || '',
-        need_id: record.need?.id || '',
+        need_id: record.need_id || '',
         is_met: record.is_met || false,
         date_met: record.date_met ? record.date_met.slice(0, 10) : ''
       });

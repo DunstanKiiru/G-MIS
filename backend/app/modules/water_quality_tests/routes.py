@@ -33,7 +33,9 @@ def list_tests():
     recs = WaterQualityTest.query.all()
     return jsonify([{
         'id': rec.id,
+        'system_id': rec.system_id,
         'system': rec.system.name,
+        'test_type_id': rec.test_type_id,
         'type': rec.test_type.name,
         'test_date': rec.test_date.isoformat(),
         'value': rec.value
