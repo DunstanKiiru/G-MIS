@@ -28,7 +28,6 @@ function WaterAssets(){
 
   const handleSubmit = async (data, resetForm) => {
     try {
-      // Convert capacity, latitude, longitude to floats
       const convertedData = {
         ...data,
         capacity: parseFloat(data.capacity),
