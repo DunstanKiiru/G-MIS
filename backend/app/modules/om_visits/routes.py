@@ -34,6 +34,7 @@ def list_visits():
     return jsonify([{
         'id': rec.id,
         'system_id': rec.water_system_id,
+        'water_system': rec.water_system.name,
         'type': rec.type.name,
         'visit_date': rec.visit_date.isoformat(),
         'notes': rec.notes
