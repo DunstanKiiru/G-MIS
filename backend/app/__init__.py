@@ -10,6 +10,7 @@ from app.modules.staff_development.routes import bp as staff_dev_bp
 
 from app.modules.spare_parts_inventory.spare_parts_routes import bp as spare_parts_bp
 
+from flask_cors import CORS
 
 def create_app():
     load_dotenv()
@@ -17,8 +18,8 @@ def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'super-secret')  # Add JWT secret key
-    app.config['JWT_TOKEN_LOCATION'] = ['headers']  # Add token location config
+    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'super-secret')
+    app.config['JWT_TOKEN_LOCATION'] = ['headers']
 
     db.init_app(app)
     migrate.init_app(app, db)

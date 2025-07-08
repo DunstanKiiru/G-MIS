@@ -1,16 +1,15 @@
 # backend/app/
 
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import jwt_required
 from app.extensions import db
 from flask import render_template
-from app.models import StaffDevelopmentNeed, StaffDevelopmentRecord
+from app.models import StaffDevelopmentNeed, StaffDevelopmentRecord, Operator
 
 bp = Blueprint('staff_dev', __name__, url_prefix='/api/staff-dev')
 
 
+
 @bp.route('/', methods=['GET'])
-@jwt_required()
 def ui_index():
     needs     = StaffDevelopmentNeed.query.all()
     operators = Operator.query.all()
@@ -22,16 +21,22 @@ def ui_index():
         records=records
     )
 
+
+# List operators
+@bp.route('/operators', methods=['GET'])
+def list_operators():
+    operators = Operator.query.all()
+    return jsonify([{'id': op.id, 'name': op.name} for op in operators])
+
+
 # List development needs
 @bp.route('/needs', methods=['GET'])
-@jwt_required()
 def list_needs():
     needs = StaffDevelopmentNeed.query.all()
     return jsonify([{'id': n.id, 'name': n.name} for n in needs])
 
 # List staff development records
 @bp.route('/records', methods=['GET'])
-@jwt_required()
 def list_records():
     recs = StaffDevelopmentRecord.query.all()
     return jsonify([{
@@ -44,7 +49,6 @@ def list_records():
 
 # Create a record
 @bp.route('/records', methods=['POST'])
-@jwt_required()
 def create_record():
     data = request.get_json()
     rec = StaffDevelopmentRecord(
@@ -59,7 +63,6 @@ def create_record():
 
 # Update a record
 @bp.route('/records/<int:id>', methods=['PUT'])
-@jwt_required()
 def update_record(id):
     rec = StaffDevelopmentRecord.query.get_or_404(id)
     data = request.get_json()
@@ -70,7 +73,6 @@ def update_record(id):
 
 # Delete a record
 @bp.route('/records/<int:id>', methods=['DELETE'])
-@jwt_required()
 def delete_record(id):
     rec = StaffDevelopmentRecord.query.get_or_404(id)
     db.session.delete(rec)

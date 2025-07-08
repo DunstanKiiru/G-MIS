@@ -1,35 +1,35 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('access_token', data.access_token);
-        navigate('/');
+        localStorage.setItem("access_token", data.access_token);
+        navigate("/");
       } else {
-        setError(data.msg || 'Login failed');
+        setError(data.msg || "Login failed");
       }
     } catch (err) {
-      setError('Login failed: ' + err.message);
+      setError("Login failed: " + err.message);
     }
   };
 
@@ -39,7 +39,9 @@ function Login() {
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label htmlFor="username" className="form-label">Username</label>
+          <label htmlFor="username" className="form-label">
+            Username
+          </label>
           <input
             type="text"
             id="username"
@@ -50,7 +52,9 @@ function Login() {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
           <input
             type="password"
             id="password"
@@ -60,7 +64,9 @@ function Login() {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">Login</button>
+        <button type="submit" className="btn btn-primary">
+          Login
+        </button>
       </form>
     </div>
   );

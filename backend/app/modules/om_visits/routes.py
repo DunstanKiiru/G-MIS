@@ -1,7 +1,6 @@
 # backend/app/routes/om_visit_routes.py
 
 from flask import Blueprint, request, jsonify
-# from flask_jwt_extended import jwt_required
 from app.extensions import db
 from flask import render_template
 from app.models import OMVisitType, OMVisit, WaterSystem

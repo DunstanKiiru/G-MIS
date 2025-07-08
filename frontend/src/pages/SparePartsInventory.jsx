@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import SparePartForm from '../components/SparePartsInventory/SparePartForm';
-import SparePartList from '../components/SparePartsInventory/SparePartList';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import SparePartForm from "../components/SparePartsInventory/SparePartForm";
+import SparePartList from "../components/SparePartsInventory/SparePartList";
 
 function SparePartsInventory() {
   const [inventory, setInventory] = useState([]);
@@ -12,16 +12,16 @@ function SparePartsInventory() {
   const fetchData = async () => {
     try {
       const [typesRes, waterSystemsRes, inventoryRes] = await Promise.all([
-        axios.get('/api/spare-parts/types'),
-        axios.get('/api/watersystems'),
-        axios.get('/api/spare-parts/inventory'),
+        axios.get("/api/spare-parts/types"),
+        axios.get("/api/watersystems"),
+        axios.get("/api/spare-parts/inventory"),
       ]);
       setTypes(typesRes.data);
       setWaterSystems(waterSystemsRes.data);
       setInventory(inventoryRes.data);
     } catch (error) {
-      console.error('Error fetching data:', error);
-      alert('Failed to fetch data from server.');
+      console.error("Error fetching data:", error);
+      alert("Failed to fetch data from server.");
     }
   };
 
@@ -34,13 +34,13 @@ function SparePartsInventory() {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this spare part?')) {
+    if (window.confirm("Are you sure you want to delete this spare part?")) {
       try {
         await axios.post(`/spare-parts/${id}/delete`);
         fetchData();
       } catch (error) {
-        console.error('Error deleting spare part:', error);
-        alert('Failed to delete spare part.');
+        console.error("Error deleting spare part:", error);
+        alert("Failed to delete spare part.");
       }
     }
   };
@@ -51,20 +51,20 @@ function SparePartsInventory() {
         await axios.post(`/spare-parts/${editingPart.id}/edit`, data);
         setEditingPart(null);
       } else {
-        await axios.post('/spare-parts/create', data);
+        await axios.post("/spare-parts/create", data);
       }
       resetForm();
       fetchData();
     } catch (error) {
-      console.error('Error submitting spare part:', error);
-      alert('Failed to submit spare part.');
+      console.error("Error submitting spare part:", error);
+      alert("Failed to submit spare part.");
     }
   };
 
   return (
     <div className="spare-parts-inventory-container">
       <div className="spare-parts-form">
-        <h2>{editingPart ? 'Edit' : 'Add'} Spare Part Inventory</h2>
+        <h2>{editingPart ? "Edit" : "Add"} Spare Part Inventory</h2>
         <SparePartForm
           part={editingPart}
           onSubmit={handleSubmit}

@@ -13,7 +13,7 @@ function StaffDevelopment() {
     try {
       const [needsRes, operatorsRes, recordsRes] = await Promise.all([
         axios.get('/api/staff-dev/needs'),
-        axios.get('/api/operators'),
+        axios.get('/api/staff-dev/operators'),
         axios.get('/api/staff-dev/records'),
       ]);
       setNeeds(needsRes.data);
