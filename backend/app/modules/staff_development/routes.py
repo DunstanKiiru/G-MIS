@@ -44,7 +44,9 @@ def list_records():
         'operator_id': rec.operator_id,
         'need': rec.need.name,
         'date': rec.date.isoformat() if rec.date else None,
-        'notes': rec.notes
+        'notes': rec.notes,
+        'is_met': rec.is_met,
+        'date_met': rec.date_met.isoformat() if rec.date_met else None
     } for rec in recs])
 
 # Create a record
@@ -66,8 +68,10 @@ def create_record():
 def update_record(id):
     rec = StaffDevelopmentRecord.query.get_or_404(id)
     data = request.get_json()
-    rec.date  = data.get('date', rec.date)
-    rec.notes = data.get('notes', rec.notes)
+    rec.date    = data.get('date', rec.date)
+    rec.notes   = data.get('notes', rec.notes)
+    rec.is_met  = data.get('is_met', rec.is_met)
+    rec.date_met = data.get('date_met', rec.date_met)
     db.session.commit()
     return jsonify({'message': 'Updated'})
 

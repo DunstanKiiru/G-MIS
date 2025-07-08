@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         element: <SparePartsInventory />,
       },
       {
-        path: "waterqualitytests",
+        path: "waterquality",
         element:<WaterQualityTests/>
       }
     ],

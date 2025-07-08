@@ -1,16 +1,15 @@
 # backend/app/routes/water_quality_routes.py
 
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import jwt_required
 from app.extensions import db
-from app.models import WaterQualityTestType, WaterQualityTest
+from app.models import WaterQualityTestType, WaterQualityTest,WaterSystem
 from flask import render_template
 
 bp = Blueprint('water_quality', __name__, url_prefix='/api/quality-tests')
 
 
 @bp.route('/', methods=['GET'])
-@jwt_required()
+
 def ui_index():
     types   = WaterQualityTestType.query.all()
     systems = WaterSystem.query.all()
@@ -24,14 +23,12 @@ def ui_index():
 
 # List test types
 @bp.route('/types', methods=['GET'])
-@jwt_required()
 def list_test_types():
     types = WaterQualityTestType.query.all()
     return jsonify([{'id': t.id, 'name': t.name} for t in types])
 
 # List test records
 @bp.route('', methods=['GET'])
-@jwt_required()
 def list_tests():
     recs = WaterQualityTest.query.all()
     return jsonify([{
@@ -44,7 +41,6 @@ def list_tests():
 
 # Create test record
 @bp.route('', methods=['POST'])
-@jwt_required()
 def create_test():
     data = request.get_json()
     rec = WaterQualityTest(
@@ -59,7 +55,6 @@ def create_test():
 
 # Update test record
 @bp.route('/<int:id>', methods=['PUT'])
-@jwt_required()
 def update_test(id):
     rec = WaterQualityTest.query.get_or_404(id)
     data = request.get_json()
@@ -70,7 +65,6 @@ def update_test(id):
 
 # Delete test record
 @bp.route('/<int:id>', methods=['DELETE'])
-@jwt_required()
 def delete_test(id):
     rec = WaterQualityTest.query.get_or_404(id)
     db.session.delete(rec)
