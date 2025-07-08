@@ -1,23 +1,21 @@
 # backend/app/routes/om_visit_routes.py
 
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import jwt_required
+# from flask_jwt_extended import jwt_required
 from app.extensions import db
 from flask import render_template
-from app.models import OMVisitType, OMVisit
+from app.models import OMVisitType, OMVisit, WaterSystem
 
 bp = Blueprint('om_visits', __name__, url_prefix='/api/om-visits')
 
 # List visit types
 @bp.route('/types', methods=['GET'])
-@jwt_required()
 def list_visit_types():
     types = OMVisitType.query.all()
     return jsonify([{'id': t.id, 'name': t.name} for t in types])
 
 
 @bp.route('/', methods=['GET'])
-@jwt_required()
 def ui_index():
     types   = OMVisitType.query.all()
     systems = WaterSystem.query.all()
@@ -31,7 +29,6 @@ def ui_index():
 
 # List visits
 @bp.route('', methods=['GET'])
-@jwt_required()
 def list_visits():
     recs = OMVisit.query.all()
     return jsonify([{
@@ -44,7 +41,6 @@ def list_visits():
 
 # Create visit
 @bp.route('', methods=['POST'])
-@jwt_required()
 def create_visit():
     data = request.get_json()
     rec = OMVisit(
@@ -59,7 +55,6 @@ def create_visit():
 
 # Update visit
 @bp.route('/<int:id>', methods=['PUT'])
-@jwt_required()
 def update_visit(id):
     rec = OMVisit.query.get_or_404(id)
     data = request.get_json()
@@ -70,9 +65,9 @@ def update_visit(id):
 
 # Delete visit
 @bp.route('/<int:id>', methods=['DELETE'])
-@jwt_required()
 def delete_visit(id):
     rec = OMVisit.query.get_or_404(id)
     db.session.delete(rec)
     db.session.commit()
     return jsonify({'message': 'Deleted'})
+

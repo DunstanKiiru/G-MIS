@@ -1,5 +1,5 @@
-from flask import Flask
-from app.extensions import db, migrate
+from flask import Flask, jsonify
+from app.extensions import db, migrate, jwt
 from app.modules.water.routes import api
 import os
 from dotenv import load_dotenv
@@ -17,9 +17,38 @@ def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'super-secret')  # Add JWT secret key
+    app.config['JWT_TOKEN_LOCATION'] = ['headers']  # Add token location config
 
     db.init_app(app)
     migrate.init_app(app, db)
+    jwt.init_app(app)
+
+    @jwt.unauthorized_loader
+    def unauthorized_response(callback):
+        app.logger.error(f"JWT unauthorized error: {callback}")
+        return jsonify({
+            'error': 'Authorization required',
+            'description': 'Request does not contain an access token.'
+        }), 401
+
+    @jwt.invalid_token_loader
+    def invalid_token_response(callback):
+        app.logger.error(f"JWT invalid token error: {callback}")
+        return jsonify({
+            'error': 'Invalid token',
+            'description': 'Signature verification failed.'
+        }), 422
+
+    @jwt.expired_token_loader
+    def expired_token_response(jwt_header, jwt_payload):
+        app.logger.error("JWT token expired error")
+        return jsonify({
+            'error': 'Token expired',
+            'description': 'The token has expired.'
+        }), 401
+
+    from app.modules.auth.routes import bp as auth_bp
 
     app.register_blueprint(api)
     app.register_blueprint(community_bp)
@@ -27,5 +56,6 @@ def create_app():
     app.register_blueprint(quality_bp)
     app.register_blueprint(staff_dev_bp)
     app.register_blueprint(spare_parts_bp)
+    app.register_blueprint(auth_bp)
 
     return app

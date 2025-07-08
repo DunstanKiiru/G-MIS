@@ -11,4 +11,4 @@ class CommunityContribution(db.Model):
     date_recorded     = db.Column(db.Date, nullable=False)
 
     water_system      = db.relationship('WaterSystem', back_populates='community_contributions')
-    type              = db.relationship('ContributionType')
+    contribution_type_rel = db.relationship('ContributionType') 

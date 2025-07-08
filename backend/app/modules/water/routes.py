@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from app.models import WaterAsset
+from app.models import WaterAsset, WaterSystem
 from app.extensions import db
 from datetime import datetime
 
@@ -88,3 +88,15 @@ def delete_asset(id):
     db.session.delete(asset)
     db.session.commit()
     return jsonify({"message": "Asset deleted"})
+
+@api.route('/api/watersystems', methods=['GET'])
+def get_water_systems():
+    systems = WaterSystem.query.all()
+    return jsonify([{
+        "id": ws.id,
+        "unique_id": ws.unique_id,
+        "name": ws.name,
+        "type_id": ws.type_id,
+        "status_id": ws.status_id,
+        "location_id": ws.location_id,
+    } for ws in systems])
